@@ -21,7 +21,36 @@ struct node{
 typedef struct node Node ;
 
 Node *root;
-root = NULL ;
+
+std::vector<std::string> sort(std::vector<std::string> ip){
+	int size = ip.size();
+	for(int i =0 ; i<size ; i++){
+		int length = ip[i].size() ;
+		int index  = i  ;
+		for(int j =i ;j<size;j++){
+			if(ip[j].size()>length){
+				index = j ;
+				length = ip[j].size();
+			}
+		}
+		if(i!= index){
+			std::swap(ip[i],ip[index]);
+		}
+	}
+	return ip ;
+}
+
+std::vector<std::string> input(){
+	std::vector<std::string> ip ;
+	std::string line ;
+	std::ifstream fp("address.txt");
+	while(std::getline(fp,line)){
+		ip.push_back(line);
+	}
+	fp.close();
+	ip = sort(ip);
+	return ip ;
+}
 
 void BuildNode(Node *x , std::string ip , int Level){
 	if(x == NULL){
