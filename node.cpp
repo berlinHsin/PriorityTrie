@@ -168,7 +168,6 @@ bool match(string node , string ip){
 
 int nodeCount(Node* cur){
 	int count = 1 ;
-	cout<<cur->data<<endl;
 	if(cur->left!=NULL&&!cur->left->flag){
 		count += nodeCount(cur->left) ;
 	}
@@ -215,12 +214,12 @@ int main(){
 	string search_string = "1000110100000001111111100000000" ;
 	string BMP = search(search_string);
 	cout<<BMP<<endl;
+	*/
 	int totalNode = nodeCount(root);
 	treeInit(root);
 	int pNode = pNodeCount(root);
 	cout<<"Total node: "<<totalNode<<endl;
 	cout<<"Priority node: "<<pNode<<endl;
-	*/
 	//int totalNode = nodeCount(root);
 	return 0 ;
 }
