@@ -8,6 +8,7 @@ using namespace std ;
 
 struct Node{
 	string data ;
+	bool priority ;
 	Node *left ;
 	Node *right ;
 };
@@ -16,14 +17,29 @@ Node* create_node(string);
 Node* insert(Node*,Node*);
 vector<string> input();
 vector<string> sort();
+bool include(string,string);
 
 Node* insert(Node* node , string value , int level){
 	if(node==NULL){
 		node = create_node(value);
+		if(value.size()>level){
+			node->priority = true ;
+		}
 	}else{
+		if(value.size()==level&&node->priority){
+			string tmp = node->data ;
+			node -> data = value ;
+			node -> priority = false ;
+			value = tmp ;
+		}else if(value.size()>node->data.size()&&node->priority&&include(node->data,value)){
+			string tmp = node->data ;
+			node -> data = value ;
+			node -> priority = false ;
+			value = tmp ;
+		}
 		value.c_str();
-		int test = value[level];
-		if(test==48){
+		int p_bit = value[level];
+		if(p_bit==48){
 			value.assign(value);
 			node->left = insert(node->left,value,++level);
 		}else{
@@ -37,6 +53,7 @@ Node* insert(Node* node , string value , int level){
 Node* create_node(string value){
 	Node* n = (Node*)malloc(sizeof(Node));
 	n -> data = value ;
+	n -> priority = false ;
 	n -> left = NULL ;
 	n -> right = NULL ;
 	return n ; 
@@ -65,6 +82,20 @@ vector<string> input(){
 	return ip ;
 }
 
+bool include(string origin , string in ){
+	int size = origin.size();
+	bool result = true ;
+	origin.c_str();
+	in.c_str();
+	for(int i = 0 ; i < size ; i++){
+		if(origin[i]!=in[i]){
+			result = false ;
+			break ;
+		}
+	}
+	return result ;
+}
+
 
 int main(){
 	Node* root = NULL; 
@@ -73,5 +104,4 @@ int main(){
 	for(int i = 0 ; i < size ; i++){
 		root = insert(root,prefix[i],0);
 	}
-	cout<<root->right->data<<endl;
 }
