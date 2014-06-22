@@ -14,6 +14,8 @@ struct Node{
 
 Node* create_node(string);
 Node* insert(Node*,Node*);
+vector<string> input();
+vector<string> sort();
 
 Node* insert(Node* node , string value , int level){
 	if(node==NULL){
@@ -40,11 +42,36 @@ Node* create_node(string value){
 	return n ; 
 }
 
+vector<string> input(){
+	vector<string> ip ;
+	string line ;
+	ifstream fp("address.txt");
+	while(getline(fp,line)){
+		ip.push_back(line);
+	}
+	fp.close();
+	int size = ip.size();
+	for(int i = 0 ; i < size ; i ++){
+		int length = ip[i].size();
+		int index  = i ;
+		for(int j =i ;j<size;j++){
+			if(ip[j].size()>length){
+				index = j ;
+				length = ip[j].size();
+			}
+		}
+		if(i!=index)swap(ip[i],ip[index]);
+	}
+	return ip ;
+}
+
+
 int main(){
 	Node* root = NULL; 
-	root = insert(root,"10011",0);
-	root = insert(root,"1101",0);
-	root = insert(root,"0001",0);
-	cout<<root->data<<endl;
-	cout<<root->left->data<<endl;
+	vector<string> prefix = input();
+	int size = prefix.size();
+	for(int i = 0 ; i < size ; i++){
+		root = insert(root,prefix[i],0);
+	}
+	cout<<root->right->data<<endl;
 }
