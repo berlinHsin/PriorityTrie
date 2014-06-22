@@ -9,6 +9,7 @@ using namespace std ;
 struct Node{
 	string data ;
 	bool priority ;
+	bool flag ;
 	Node *left ;
 	Node *right ;
 };
@@ -21,6 +22,8 @@ vector<string> sort();
 bool include(string,string);
 bool match(string,string);
 string search(string);
+int nodeCount(Node*);
+int pNodeCount(Node*);
 
 Node* insert(Node* node , string value , int level){
 	if(node==NULL){
@@ -57,6 +60,7 @@ Node* create_node(string value){
 	Node* n = (Node*)malloc(sizeof(Node));
 	n -> data = value ;
 	n -> priority = false ;
+	n -> flag = false ;
 	n -> left = NULL ;
 	n -> right = NULL ;
 	return n ; 
@@ -136,6 +140,34 @@ bool match(string node , string ip){
 	return result ;
 }
 
+int nodeCount(Node* cur){
+	int count = 1 ;
+	cout<<cur->data<<endl;
+	if(cur->left!=NULL&&!cur->left->flag){
+		count += nodeCount(cur->left) ;
+	}
+	if(cur->right!=NULL&&!cur->right->flag){
+		count += nodeCount(cur->right) ;
+	}
+	cur->flag = true ;
+	return count ;
+}
+
+int pNodeCount(Node* cur){
+	int count = 0 ;
+	if(cur->left!=NULL&&!cur->left->flag){
+		count += pNodeCount(cur->left);
+	}
+	if(cur->right!=NULL&&!cur->right->flag){
+		count += pNodeCount(cur->right);
+	}
+	cur->flag=true ;
+	if(cur->priority){
+		return count+1 ;
+	}else{
+		return count ;
+	}
+}
 
 int main(){
 	vector<string> prefix = input();
@@ -143,7 +175,12 @@ int main(){
 	for(int i = 0 ; i < size ; i++){
 		root = insert(root,prefix[i],0);
 	}
-	string search_string = "01010011000000001111111100000000" ;
+	/*
+	string search_string = "1000110100000001111111100000000" ;
 	string BMP = search(search_string);
 	cout<<BMP<<endl;
+	*/
+	int count = nodeCount(root);
+	cout<<count<<endl;
+	return 0 ;
 }
