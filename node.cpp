@@ -107,7 +107,7 @@ string search(string ip){
 	int p_bit ;
 	bit.c_str() ;
 	while(node!=NULL){
-		if(match(ip,node->data)){
+		if(match(node->data,ip)){
 			BMP = node->data ;
 			if(node->priority)break;
 		}
@@ -117,6 +117,7 @@ string search(string ip){
 		}else{
 			node = node->right ;
 		}
+		level ++ ;
 	}
 	return BMP ;
 }
@@ -142,4 +143,7 @@ int main(){
 	for(int i = 0 ; i < size ; i++){
 		root = insert(root,prefix[i],0);
 	}
+	string search_string = "01010011000000001111111100000000" ;
+	string BMP = search(search_string);
+	cout<<BMP<<endl;
 }
