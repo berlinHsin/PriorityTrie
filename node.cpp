@@ -17,6 +17,7 @@ struct Node{
 Node* root = NULL; 
 Node* create_node(string);
 Node* insert(Node*,Node*);
+Node* search_nodeReturn(string);
 vector<string> input();
 vector<string> sort();
 bool include(string,string);
@@ -25,6 +26,8 @@ string search(string);
 int nodeCount(Node*);
 int pNodeCount(Node*);
 void treeInit(Node*);
+void deletion(string);
+void delNode(Node*,string);
 
 Node* insert(Node* node , string value , int level){
 	if(node==NULL){
@@ -104,6 +107,28 @@ bool include(string origin , string in ){
 	return result ;
 }
 
+Node* search_nodeReturn(string ip){
+	string bit = ip ;
+	Node* node = root ;
+	Node* cur  ;
+	int level = 0 ;
+	int p_bit ;
+	bit.c_str();
+	while(node!=NULL){
+		if(match(node->data,ip)){
+			if(node->priority)break;
+		}
+		p_bit = bit[level];
+		if(p_bit==48){
+			node = node->left ;
+		}else{
+			node = node->right ;
+		}
+		level ++ ;
+	}
+	return cur ;
+}
+
 string search(string ip){
 	string BMP = "*" ;
 	string bit = ip  ;
@@ -143,6 +168,7 @@ bool match(string node , string ip){
 
 int nodeCount(Node* cur){
 	int count = 1 ;
+	cout<<cur->data<<endl;
 	if(cur->left!=NULL&&!cur->left->flag){
 		count += nodeCount(cur->left) ;
 	}
@@ -189,11 +215,12 @@ int main(){
 	string search_string = "1000110100000001111111100000000" ;
 	string BMP = search(search_string);
 	cout<<BMP<<endl;
-	*/
 	int totalNode = nodeCount(root);
 	treeInit(root);
 	int pNode = pNodeCount(root);
 	cout<<"Total node: "<<totalNode<<endl;
 	cout<<"Priority node: "<<pNode<<endl;
+	*/
+	//int totalNode = nodeCount(root);
 	return 0 ;
 }
