@@ -13,11 +13,14 @@ struct Node{
 	Node *right ;
 };
 
+Node* root = NULL; 
 Node* create_node(string);
 Node* insert(Node*,Node*);
 vector<string> input();
 vector<string> sort();
 bool include(string,string);
+bool match(string,string);
+string search(string);
 
 Node* insert(Node* node , string value , int level){
 	if(node==NULL){
@@ -96,9 +99,44 @@ bool include(string origin , string in ){
 	return result ;
 }
 
+string search(string ip){
+	string BMP = "*" ;
+	string bit = ip  ;
+	Node* node = root ;
+	int level = 0 ;
+	int p_bit ;
+	bit.c_str() ;
+	while(node!=NULL){
+		if(match(ip,node->data)){
+			BMP = node->data ;
+			if(node->priority)break;
+		}
+		p_bit = bit[level];
+		if(p_bit==48){
+			node = node->left ;
+		}else{
+			node = node->right ;
+		}
+	}
+	return BMP ;
+}
+
+bool match(string node , string ip){
+	bool result = true ;
+	int length = node.size();
+	node.c_str();
+	ip.c_str();
+	for(int i = 0 ; i < length ; i ++){
+		if(node[i]!=ip[i]){
+			result = false ;
+			break ;
+		}
+	}
+	return result ;
+}
+
 
 int main(){
-	Node* root = NULL; 
 	vector<string> prefix = input();
 	int size = prefix.size();
 	for(int i = 0 ; i < size ; i++){
