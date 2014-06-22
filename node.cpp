@@ -24,6 +24,7 @@ bool match(string,string);
 string search(string);
 int nodeCount(Node*);
 int pNodeCount(Node*);
+void treeInit(Node*);
 
 Node* insert(Node* node , string value , int level){
 	if(node==NULL){
@@ -142,7 +143,6 @@ bool match(string node , string ip){
 
 int nodeCount(Node* cur){
 	int count = 1 ;
-	cout<<cur->data<<endl;
 	if(cur->left!=NULL&&!cur->left->flag){
 		count += nodeCount(cur->left) ;
 	}
@@ -151,6 +151,16 @@ int nodeCount(Node* cur){
 	}
 	cur->flag = true ;
 	return count ;
+}
+
+void treeInit(Node* cur){
+	if(cur->left!=NULL&&cur->left->flag){
+		treeInit(cur->left) ;
+	}
+	if(cur->right!=NULL&&cur->right->flag){
+		treeInit(cur->right) ;
+	}
+	cur->flag = false ;
 }
 
 int pNodeCount(Node* cur){
@@ -180,7 +190,10 @@ int main(){
 	string BMP = search(search_string);
 	cout<<BMP<<endl;
 	*/
-	int count = nodeCount(root);
-	cout<<count<<endl;
+	int totalNode = nodeCount(root);
+	treeInit(root);
+	int pNode = pNodeCount(root);
+	cout<<"Total node: "<<totalNode<<endl;
+	cout<<"Priority node: "<<pNode<<endl;
 	return 0 ;
 }
