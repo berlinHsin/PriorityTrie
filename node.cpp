@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <cstring>
+#include <stdio.h>
 
 using namespace std ;
 
@@ -205,11 +207,52 @@ int pNodeCount(Node* cur){
 }
 
 int main(){
+	
+	char Inputip[16];
+	char *period=".";
+	char *pch;
+	vector<int> v;
+	fstream file;
+	file.open("InputIP.txt",ios::out);
+	cout<< "Input IP Address"<<endl;
+	cin >> Inputip;
+
+
+	//Seperate IP by .  into 4 groups
+	pch = strtok(Inputip,period);
+	while(pch !=NULL){
+		v.push_back(atoi(pch));
+		pch = strtok(NULL,period);
+	}
+	for(int i = 0;i< v.size();i++){
+		cout<<v[i]<<endl;
+	}
+	char c;
+	
+	//set Mask	
+	int mask = 1 << 8*sizeof(int)-1;
+
+	//turn IP XXX.XXX.XXX.XXX into bit
+	for( int i = 0 ; i < v.size();i++){
+		for(int j = 1; j <=8*sizeof(int) ; j++){
+			if(j > 24){			
+				c=putchar(v[i] & mask ?'1':'0');
+				file<<c;
+			}
+				v[i] <<= 1;
+			
+		}
+		//cout<<endl;
+	}
+
+	file.close();
+		
 	vector<string> prefix = input();
 	int size = prefix.size();
 	for(int i = 0 ; i < size ; i++){
 		root = insert(root,prefix[i],0);
 	}
+
 	/*
 	string search_string = "1000110100000001111111100000000" ;
 	string BMP = search(search_string);
