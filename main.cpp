@@ -258,7 +258,7 @@ int main(){
 		pch = strtok(NULL,period);
 	}
 	for(int i = 0;i< v.size();i++){
-		cout<<v[i]<<endl;
+		//cout<<v[i]<<endl;
 	}
 
 	//set Mask	
@@ -274,17 +274,24 @@ int main(){
 			}
 				v[i] <<= 1;
 		}
-		//cout<<endl;
 	}
 	file.close();
 
+	cout<<endl;
 	vector<string> prefix = input();
 	int size = prefix.size();
 	for(int i = 0 ; i < size ; i++){
 		root = insert(root,prefix[i],0,NULL);
 	}
+	
+	string searchIp ;
+	ifstream fp("InputIP.txt") ;
+	getline(fp,searchIp);
+	fp.close();
+
+	cout<<"BMP:"<<search(searchIp)<<endl;
+	
+	//deletion("00");
 	//int totalNode = nodeCount(root);
-	deletion("00");
-	int totalNode = nodeCount(root);
 	return 0 ;
 }
