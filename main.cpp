@@ -1,5 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
+#include <stdio.h>
+#include <cstring>
 #include <string>
 #include <vector>
 #include <fstream>
