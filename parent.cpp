@@ -112,12 +112,13 @@ bool include(string origin , string in ){
 Node* search_nodeReturn(string ip){
 	string bit = ip ;
 	Node* node = root ;
-	Node* cur  ;
+	Node* cur  = node ;
 	int level = 0 ;
 	int p_bit ;
 	bit.c_str();
 	while(node!=NULL){
 		if(match(node->data,ip)){
+			cur = node ;
 			if(node->priority)break;
 		}
 		p_bit = bit[level];
@@ -170,6 +171,7 @@ bool match(string node , string ip){
 
 int nodeCount(Node* cur){
 	int count = 1 ;
+	cout<<cur->data<<endl;
 	if(cur->left!=NULL&&!cur->left->flag){
 		count += nodeCount(cur->left) ;
 	}
@@ -206,6 +208,37 @@ int pNodeCount(Node* cur){
 	}
 }
 
+void deletion(string prefix){
+	string result = search(prefix);
+	if(result == prefix){
+		Node* node = search_nodeReturn(prefix);
+		delNode(node,prefix);
+	}
+}
+
+void delNode(Node* node ,string prefix){
+	Node* parent = node -> parent ;
+	if(node->left==NULL&&node->right==NULL){
+		if(parent->left!=NULL&&parent->left->data==prefix){
+			parent -> left = NULL ;
+		}else{
+			parent -> right = NULL ;
+		}
+	}else{
+		if(node->left!=NULL){
+			node->data = node->left->data ;
+			node->priority = node->left->priority ;
+			delNode(node->left,node->left->data);
+		}else{
+			node->data = node->right->data ;
+			node->priority = node->right->priority;
+			delNode(node->right,node->right->data);
+		}
+	}
+}
+
+
+
 int main(){
 	vector<string> prefix = input();
 	int size = prefix.size();
@@ -224,9 +257,8 @@ int main(){
 	cout<<"Total node: "<<totalNode<<endl;
 	cout<<"Priority node: "<<pNode<<endl;
 	*/
-	cout<<root->data<<endl;
-	cout<<root->left->data<<endl;
-	cout<<root->left->parent->data<<endl;
 	//int totalNode = nodeCount(root);
+	deletion("00");
+	int totalNode = nodeCount(root);
 	return 0 ;
 }
