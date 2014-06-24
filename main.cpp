@@ -45,7 +45,7 @@ Node* insert(Node* node , string value , int level , Node* parent){
 		}else if(value.size()>node->data.size()&&node->priority&&include(node->data,value)){
 			string tmp = node->data ;
 			node -> data = value ;
-			node -> priority = false ;
+			node -> priority = true ;
 			value = tmp ;
 		}
 		value.c_str();
@@ -289,7 +289,7 @@ int main(){
 	getline(fp,searchIp);
 	fp.close();
 
-	cout<<"BMP:"<<search(searchIp)<<endl;
+	cout<<"LMP:"<<search(searchIp)<<endl;
 	
 	//deletion("00");
 	//int totalNode = nodeCount(root);
