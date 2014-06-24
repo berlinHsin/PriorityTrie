@@ -240,13 +240,11 @@ int main(){
 				file<<c;
 			}
 				v[i] <<= 1;
-			
 		}
 		//cout<<endl;
 	}
 
 	file.close();
-		
 	vector<string> prefix = input();
 	int size = prefix.size();
 	for(int i = 0 ; i < size ; i++){

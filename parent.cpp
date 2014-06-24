@@ -240,23 +240,50 @@ void delNode(Node* node ,string prefix){
 
 
 int main(){
+
+	char Inputip[16];
+	char *period=".";
+	char *pch;
+	vector<int> v;
+	fstream file;
+	file.open("InputIP.txt",ios::out);
+	cout<< "Input IP Address"<<endl;
+	cin >> Inputip;
+
+
+	//Seperate IP by .  into 4 groups
+	pch = strtok(Inputip,period);
+	while(pch !=NULL){
+		v.push_back(atoi(pch));
+		pch = strtok(NULL,period);
+	}
+	for(int i = 0;i< v.size();i++){
+		cout<<v[i]<<endl;
+	}
+
+	//set Mask	
+	int mask = 1 << 8*sizeof(int)-1;
+	char c;
+
+	//turn IP XXX.XXX.XXX.XXX into bit
+	for( int i = 0 ; i < v.size();i++){
+		for(int j = 1; j <=8*sizeof(int) ; j++){
+			if(j > 24){			
+				c=putchar(v[i] & mask ?'1':'0');
+				file<<c;
+			}
+				v[i] <<= 1;
+		}
+		//cout<<endl;
+	}
+	file.close();
+
+	cout<<endl;
 	vector<string> prefix = input();
 	int size = prefix.size();
 	for(int i = 0 ; i < size ; i++){
 		root = insert(root,prefix[i],0,NULL);
 	}
-	/*
-	string search_string = "1000110100000001111111100000000" ;
-	string BMP = search(search_string);
-	cout<<BMP<<endl;
-	*/
-	/*
-	int totalNode = nodeCount(root);
-	treeInit(root);
-	int pNode = pNodeCount(root);
-	cout<<"Total node: "<<totalNode<<endl;
-	cout<<"Priority node: "<<pNode<<endl;
-	*/
 	//int totalNode = nodeCount(root);
 	deletion("00");
 	int totalNode = nodeCount(root);
